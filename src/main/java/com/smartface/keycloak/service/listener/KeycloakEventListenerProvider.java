@@ -5,7 +5,6 @@ import com.smartface.keycloak.topic.Topic;
 import lombok.AllArgsConstructor;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
-import org.keycloak.events.EventType;
 import org.keycloak.events.admin.AdminEvent;
 import org.springframework.stereotype.Component;
 
@@ -16,26 +15,23 @@ public class KeycloakEventListenerProvider implements EventListenerProvider {
 
     @Override
     public void onEvent(Event event) {
-        if (EventType.REGISTER.equals(event.getType())) {
-            kafkaProducerService.sendEventToKafka(Topic.REGISTER, event.getUserId());
+        switch (event.getType()) {
+            case REGISTER:
+                kafkaProducerService.sendEventToKafka(Topic.REGISTER, event.getUserId());
+                break;
+            case CLIENT_LOGIN:
+                kafkaProducerService.sendEventToKafka(Topic.CLIENT_LOGIN, event.getUserId());
+                break;
+            case UPDATE_PASSWORD:
+                kafkaProducerService.sendEventToKafka(Topic.UPDATE_PASSWORD, event.getUserId());
+                break;
+            case DELETE_ACCOUNT:
+                kafkaProducerService.sendEventToKafka(Topic.DELETE_ACCOUNT, event.getUserId());
+                break;
+            case VERIFY_EMAIL:
+                kafkaProducerService.sendEventToKafka(Topic.VERIFY_EMAIL, event.getUserId());
+                break;
         }
-
-        if (EventType.CLIENT_LOGIN.equals(event.getType())) {
-            kafkaProducerService.sendEventToKafka(Topic.CLIENT_LOGIN, event.getUserId());
-        }
-
-        if (EventType.UPDATE_PASSWORD.equals(event.getType())) {
-            kafkaProducerService.sendEventToKafka(Topic.UPDATE_PASSWORD, event.getUserId());
-        }
-
-        if (EventType.DELETE_ACCOUNT.equals(event.getType())) {
-            kafkaProducerService.sendEventToKafka(Topic.DELETE_ACCOUNT, event.getUserId());
-        }
-
-        if (EventType.VERIFY_EMAIL.equals(event.getType())) {
-            kafkaProducerService.sendEventToKafka(Topic.VERIFY_EMAIL, event.getUserId());
-        }
-
     }
 
     @Override
@@ -44,7 +40,6 @@ public class KeycloakEventListenerProvider implements EventListenerProvider {
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() { }
 }
+

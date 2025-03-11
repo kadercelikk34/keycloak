@@ -1,7 +1,7 @@
 package com.smartface.keycloak.service.keycloak;
 
 import com.smartface.keycloak.dto.user.CreateUserRequest;
-import com.smartface.keycloak.dto.user.ResetPassword;
+import com.smartface.keycloak.dto.user.ResetPasswordRequest;
 import org.keycloak.representations.idm.UserRepresentation;
 
 public interface KeycloakUserService {
@@ -12,6 +12,6 @@ public interface KeycloakUserService {
 
     void emailVerification(String userId);
 
-    void updatePassword(ResetPassword resetPassword, String userId);
+    void updatePassword(ResetPasswordRequest resetPasswordRequest, String userId);
 
 }

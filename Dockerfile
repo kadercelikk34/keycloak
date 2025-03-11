@@ -21,8 +21,11 @@ WORKDIR /app
 # Copy the packaged jar file from the build stage
 COPY --from=build /app/target/keycloak-0.0.1-SNAPSHOT.jar keycloak.jar
 
-# Expose the port the app will run on (default Spring Boot port)
-EXPOSE 8081
+# Expose the port the app will run on (default Spring Boot port is 8080, adjust if necessary)
+EXPOSE 8080
 
 # Command to run the application
 ENTRYPOINT ["java", "-jar", "/app/keycloak.jar"]
+
+# Optional: CMD to provide flexibility for overriding the command
+# CMD ["java", "-jar", "/app/keycloak.jar"]

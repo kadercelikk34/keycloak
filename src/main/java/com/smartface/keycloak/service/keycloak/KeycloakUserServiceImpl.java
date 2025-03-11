@@ -1,7 +1,7 @@
 package com.smartface.keycloak.service.keycloak;
 
 import com.smartface.keycloak.dto.user.CreateUserRequest;
-import com.smartface.keycloak.dto.user.ResetPassword;
+import com.smartface.keycloak.dto.user.ResetPasswordRequest;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
@@ -102,11 +102,11 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     }
 
     @Override
-    public void updatePassword(ResetPassword resetPassword, String userId) {
+    public void updatePassword(ResetPasswordRequest resetPasswordRequest, String userId) {
         try {
             UserResource userResource = keycloak.realm(realm).users().get(userId);
             CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
-            credentialRepresentation.setValue(resetPassword.password());
+            credentialRepresentation.setValue(resetPasswordRequest.password());
             credentialRepresentation.setType(CredentialRepresentation.PASSWORD);
             credentialRepresentation.setTemporary(false);
 

@@ -1,7 +1,7 @@
 package com.smartface.keycloak.controller;
 
 import com.smartface.keycloak.dto.user.CreateUserRequest;
-import com.smartface.keycloak.dto.user.ResetPassword;
+import com.smartface.keycloak.dto.user.ResetPasswordRequest;
 import com.smartface.keycloak.service.keycloak.KeycloakUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<Boolean> updatePassword(@RequestBody ResetPassword request, Principal principal) {
+    public ResponseEntity<Boolean> updatePassword(@RequestBody ResetPasswordRequest request, Principal principal) {
         keycloakUserService.updatePassword(request, principal.getName());
         return ResponseEntity.ok(true);
 
