@@ -36,21 +36,18 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Boolean> deleteUserById(@PathVariable String userId) {
-        keycloakUserService.deleteUserById(userId);
-        return ResponseEntity.ok(true);
+    public ResponseEntity<Boolean> deleteUser(@PathVariable String userId) {
+        return ResponseEntity.ok(keycloakUserService.deleteUserById(userId));
     }
 
     @PutMapping("/{userId}/send-verify-email")
     public ResponseEntity<Boolean> sendVerificationEmail(@PathVariable String userId) {
-        keycloakUserService.emailVerification(userId);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(keycloakUserService.emailVerification(userId));
     }
 
     @PutMapping("/change-password")
     public ResponseEntity<Boolean> updatePassword(@RequestBody ResetPasswordRequest request, Principal principal) {
-        keycloakUserService.updatePassword(request, principal.getName());
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(keycloakUserService.updatePassword(request, principal.getName()));
 
     }
 }

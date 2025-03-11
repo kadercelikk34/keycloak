@@ -29,16 +29,22 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
-        // Set the number of retries for the producer
-       // configProps.put(ProducerConfig.RETRIES_CONFIG, 5);  // Retry 5 times
+        // Set the maximum number of retries for message delivery
+        // Configured to retry indefinitely to avoid message loss
         configProps.put(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
 
-        // Configure acknowledgment and timeout settings
-        configProps.put(ProducerConfig.ACKS_CONFIG, "all"); // Ensures the leader and replicas acknowledge the message
-        configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);  // Maximum time to wait for delivery
+        // Enable idempotence to prevent duplicate messages in case of retries
+        configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
 
-        // Retry backoff time
+        // Set acknowledgment level to 'all' to ensure data is replicated and committed
+        configProps.put(ProducerConfig.ACKS_CONFIG, "all");
+
+        // Set the maximum time (in ms) to wait for message delivery before timing out
+        configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);  // 2 minutes timeout
+
+        // Set the delay (in ms) between retry attempts in case of failure
         configProps.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, 1000);  // 1 second delay between retries
+
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
