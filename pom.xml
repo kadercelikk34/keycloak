@@ -75,10 +75,11 @@
             <version>0.11.5</version>
         </dependency>
 
-        <!-- H2 Database for Testing -->
+        <!-- PostgreSQL Dependency -->
+
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
 

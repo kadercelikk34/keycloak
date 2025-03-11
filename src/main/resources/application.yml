@@ -26,11 +26,13 @@ spring:
 #      max-delay: 30000
 #      multiplier: 2
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
+    url: jdbc:postgresql://localhost:5432/smartface
+    username: smartface
     password: password
-    dialect: org.hibernate.dialect.H2Dialect
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+
   security:
     oauth2:
       resourceserver:
