@@ -1,5 +1,5 @@
 # Step 1: Build the application
-FROM maven:3.8.4-openjdk-17 AS build
+FROM maven:3.8.4-openjdk-22 AS build
 
 # Set working directory inside container
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Step 2: Create a runtime image
-FROM openjdk:17-jdk-slim
+FROM openjdk:22-jdk-slim
 
 # Set working directory for the runtime image
 WORKDIR /app
@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=build /app/target/keycloak-0.0.1-SNAPSHOT.jar keycloak.jar
 
 # Expose the port the app will run on (default Spring Boot port is 8080, adjust if necessary)
-EXPOSE 8080
+EXPOSE 8081
 
 # Command to run the application
 ENTRYPOINT ["java", "-jar", "/app/keycloak.jar"]
