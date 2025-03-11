@@ -24,24 +24,24 @@ public class KeycloakProvider {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
-   @Bean
+    @Bean
     public Keycloak getInstance() {
-            return KeycloakBuilder.builder()
-                                  .realm(realm)
-                                  .serverUrl(keycloakAuthServerUrl)
-                                  .clientId(clientId)
-                                  .clientSecret(clientSecret)
-                                  .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
-                                  .build();
-        }
+        return KeycloakBuilder.builder()
+                              .realm(realm)
+                              .serverUrl(keycloakAuthServerUrl)
+                              .clientId(clientId)
+                              .clientSecret(clientSecret)
+                              .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+                              .build();
+    }
 
     public KeycloakBuilder newKeycloakBuilderWithPasswordCredentials(String username, String password) {
-        return KeycloakBuilder.builder() //
-                              .realm(realm) //
-                              .serverUrl(keycloakAuthServerUrl)//
-                              .clientId(clientId) //
-                              .clientSecret(clientSecret) //
-                              .username(username) //
+        return KeycloakBuilder.builder()
+                              .realm(realm)
+                              .serverUrl(keycloakAuthServerUrl)
+                              .clientId(clientId)
+                              .clientSecret(clientSecret)
+                              .username(username)
                               .password(password);
     }
 }

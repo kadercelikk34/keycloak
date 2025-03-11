@@ -40,6 +40,7 @@ public class KafkaConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
     @Bean
     private ConsumerFactory<String, String> consumerFactory() {
         Map<String, Object> consumerProps = new HashMap<>();

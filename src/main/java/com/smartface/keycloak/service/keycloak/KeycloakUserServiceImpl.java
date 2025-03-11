@@ -84,10 +84,11 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     }
 
     @Override
-    public void deleteUserById(String userId) {
+    public Boolean deleteUserById(String userId) {
         try {
             keycloak.realm(realm).users().delete(userId);
             LOGGER.info("User deleted successfully: {}", userId);
+            return true;
         } catch (Exception e) {
             LOGGER.error("Error deleting user by ID: {}", userId, e);
             throw new UserDeletionException("Error deleting user with ID: " + userId, e);
@@ -95,10 +96,11 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     }
 
     @Override
-    public void emailVerification(String userId) {
+    public Boolean emailVerification(String userId) {
         try {
             keycloak.realm(realm).users().get(userId).sendVerifyEmail();
             LOGGER.info("Verification email sent to user: {}", userId);
+            return true;
         } catch (Exception e) {
             LOGGER.error("Error sending verification email to user: {}", userId, e);
             throw new EmailVerificationException("Error sending verification email to user: " + userId, e);
@@ -106,7 +108,7 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     }
 
     @Override
-    public void updatePassword(ResetPasswordRequest resetPasswordRequest, String userId) {
+    public Boolean updatePassword(ResetPasswordRequest resetPasswordRequest, String userId) {
         try {
             UserResource userResource = keycloak.realm(realm).users().get(userId);
             CredentialRepresentation credentialRepresentation = new CredentialRepresentation();
@@ -116,6 +118,7 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
 
             userResource.resetPassword(credentialRepresentation);
             LOGGER.info("Password updated for user: {}", userId);
+            return true;
         } catch (Exception e) {
             LOGGER.error("Error updating password for user: {}", userId, e);
             throw new PasswordResetException("Error updating password for user: " + userId, e);

@@ -8,10 +8,10 @@ public interface KeycloakUserService {
 
     UserRepresentation createUser(CreateUserRequest request);
     UserRepresentation getUserById(String userId);
-    void deleteUserById(String userId);
+    Boolean deleteUserById(String userId);
 
-    void emailVerification(String userId);
+    Boolean emailVerification(String userId);
 
-    void updatePassword(ResetPasswordRequest resetPasswordRequest, String userId);
+    Boolean updatePassword(ResetPasswordRequest resetPasswordRequest, String userId);
 
 }

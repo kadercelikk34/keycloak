@@ -3,11 +3,12 @@ services:
   app:
     build: .
     ports:
-      - "8081:8081"  # Expose the Spring Boot app on port 8080
+      - "8081:8081"  # Expose the Spring Boot app on port 8081
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     networks:
       - local
+
   postgres:
     image: postgres:latest
     environment:
@@ -17,14 +18,23 @@ services:
     networks:
       - local
 
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.3
     command: start-dev
+    links:
+      - postgres
     ports:
       - "8080:8080"
     environment:
-      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN : admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: smartface
+      KC_DB_PASSWORD: password
+      KC_DB_URL: jdbc:postgresql://postgres:5432/smartface
+      PROXY_ADDRESS_FORWARDING: 'true'
     networks:
       - local
 

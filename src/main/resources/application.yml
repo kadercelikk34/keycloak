@@ -3,7 +3,7 @@ keycloak:
   auth-server-url: http://localhost:8080 # Keycloak URL
   realm: smartface
   domain:  http://localhost:8080
-  resource: admin-cli
+  resource: smart-face-client
   credentials:
       secret: Fl4cSpdq5tseDykByzKZQNSR3xvvmE5X
   public-client: true
